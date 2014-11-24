@@ -4,12 +4,13 @@
 
     angular
         .module('app.core')
-        .factory('dataservice', [dataservice]);
+        .factory('MediaService', ['$http', MediaService]);
 
     /* @ngInject */
-    function dataservice() {
+    function MediaService($http) {
         var service = {
-            sereviceName: sereviceName
+            getData: getData,
+            getTest: getTest
 
         };
 
@@ -17,9 +18,31 @@
 
         ////////////////
 
-        //var onUserComplete =
-        //};
+        function getData(callback){
+            $http.get('/https://itunes.apple.com/').
+                success(function(data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    callback(data)
+                }).
+                error(function(data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    console.log("Error while making HTTP call")
+                });
+        }
 
+        function getTest() {
+            return console.log("Test works!");
+        }
 
     }
 })();
+
+
+
+
+
+
+
+
